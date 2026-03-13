@@ -1,0 +1,64 @@
+.detailed-offer {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detailed-offer h1 {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.detailed-description {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #334155;
+  white-space: pre-wrap;
+}
+
+.badges-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.location-badge {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.contract-badge {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.date-badge {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid var(--border);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .detailed-offer h1 {
+    font-size: 2rem;
+  }
+}
