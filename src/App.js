@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 function App() {
   const [message, setMessage] = useState('');
   useEffect(() => {
-    fetch('http://localhost:8080/hello')
+    fetch('https://psjob-api.oups.net/hello')
       .then((response) => response.text())
       .then((text) => setMessage(text));
   }, []);
