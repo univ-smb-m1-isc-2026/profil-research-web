@@ -2,6 +2,7 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import OfferBox from './components/candidateOffer/offer';
 import SelectedOfferDetails from './components/candidateOffer/selectedOfferDetails';
+import HeaderHome from './components/mainComponents/headerHome';
 
 function App() {
   const [offer, setOffer] = useState(null);
@@ -17,23 +18,28 @@ function App() {
 
 
 
-  return ( 
-    <div className="app-layout">
-      <div className={`offers-container ${selectedOffer ? 'split-view' : 'full-view'}`}>
-        {offer?.map((off, idx) => (
-          <OfferBox key={idx} offer={off} onClick={() => {
-            console.log('Clic sur offer:', off);
-            setSelectedOffer(off);
-          }} />
-        ))}
-      </div>
+  return (
+    <div className="app-root">
+      <title>PSJOB</title>
+      <HeaderHome />
 
-      {selectedOffer && (
-        <div className="details-container">
-          <SelectedOfferDetails selectedOffer={selectedOffer} setSelectedOffer={setSelectedOffer} />
+      <main className="app-content">
+        <div className={`offers-container ${selectedOffer ? 'split-view' : 'full-view'}`}>
+          {offer?.map((off, idx) => (
+            <OfferBox key={idx} offer={off} onClick={() => {
+              console.log('Clic sur offer:', off);
+              setSelectedOffer(off);
+            }} />
+          ))}
         </div>
-      )}
-    </div> 
+
+        {selectedOffer && (
+          <div className="details-container">
+            <SelectedOfferDetails selectedOffer={selectedOffer} setSelectedOffer={setSelectedOffer} />
+          </div>
+        )}
+      </main>
+    </div>
   );
 }
 
