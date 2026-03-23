@@ -7,7 +7,6 @@ export default function FormPage() {
 
     const offerInfoMock = { title: 'Dev backend' , location: 'Paris' }
     const location = useLocation();
-    const navigatedOffer = location?.state?.offer;
     // TODO: remplacer par fetch réel avec l'id
     const mockData = [
         { id: '1', title: 'Pourquoi souhaitez-vous postuler à cette offre ?', format: 'text' },
@@ -86,7 +85,6 @@ export default function FormPage() {
                                         type="checkbox"
                                         checked={(answers[q.id] || []).includes(opt)}
                                         onChange={() => handleChangeCheckbox(q.id, opt)}
-                                        required
                                     />{' '}{opt}
                                 </label>
                             ))}
