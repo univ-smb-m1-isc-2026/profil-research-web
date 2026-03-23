@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 export default function FormPage() {
     const { id } = useParams();
+    console.log('offer id from url', id);
 
     const offerInfoMock = { title: 'Dev backend' , location: 'Paris' }
     
