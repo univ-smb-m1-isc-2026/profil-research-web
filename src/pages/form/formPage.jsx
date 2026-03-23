@@ -46,6 +46,7 @@ export default function FormPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // TODO : envoyer au back les réponses pour les stocker
         console.log('form answers', answers);
     };
 

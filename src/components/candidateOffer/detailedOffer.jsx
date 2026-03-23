@@ -6,7 +6,6 @@ export default function DetailedOffer({offer}) {
 
   const handleApply = () => {
     console.log('vers formulaire de l\'offre', offer.id);
-    //navigate("/form", { state: { offer: offer } });
     navigate(`/form/${offer.id}`);
   };
 
