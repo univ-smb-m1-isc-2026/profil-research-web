@@ -1,5 +1,5 @@
 import './formPage.css';
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import React, { useState } from 'react';
 
 export default function FormPage() {
