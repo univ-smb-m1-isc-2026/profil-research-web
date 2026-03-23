@@ -1,0 +1,40 @@
+/* Admin-specific styles for offer card actions */
+.admin-offer {
+  position: relative;
+  padding-bottom: 12px; /* space for admin actions */
+}
+
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.visibility-toggle {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border, #f1f5f9);
+  background: var(--bg-card, #fff);
+  color: var(--text-main, #0f172a);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.visibility-toggle.on {
+  /* Visible: green background */
+  background: var(--accent-green, #dcfce7);
+  color: #065f46; /* darker green */
+  border-color: rgba(6,95,70,0.12);
+}
+
+.visibility-toggle.off {
+  /* Invisible: gray/disabled look */
+  background: #f3f4f6; /* gray-100 */
+  color: #374151; /* gray-700 for sufficient contrast */
+  border-color: rgba(99,102,241,0.04);
+}
+
+.visibility-toggle:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
