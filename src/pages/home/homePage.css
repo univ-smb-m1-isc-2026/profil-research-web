@@ -1,0 +1,119 @@
+:root {
+  --primary: #7dd3fc; /* Pastel Blue */
+  --primary-dark: #38bdf8;
+  --bg-light: #fdfcfb;
+  --bg-card: #ffffff;
+  --border: #f1f5f9;
+  --text-main: #334155;
+  --text-muted: #64748b;
+  --accent-green: #dcfce7;
+  --accent-blue: #e0f2fe;
+  --header-height: 64px;
+}
+
+.app-root {
+  display: block;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  background-color: var(--bg-light);
+  font-family: 'Inter', -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+.header-home {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  z-index: 50;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.app-content {
+  display: flex;
+  height: calc(100vh - var(--header-height));
+  margin-top: var(--header-height);
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+.offers-container {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.offers-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.offers-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.offers-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.offers-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.offers-container.full-view {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.offers-container.split-view {
+  width: 380px;
+  min-width: 380px;
+  border-right: 1px solid var(--border);
+  background: white;
+}
+
+.details-container {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 3rem;
+  background: #ffffff;
+  box-sizing: border-box;
+  animation: slideIn 0.3s ease-out;
+  border-left: 1px solid var(--border);
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.details-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.details-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.details-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.details-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}

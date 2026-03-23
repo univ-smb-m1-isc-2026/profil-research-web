@@ -1,0 +1,108 @@
+:root{
+  --primary: #7dd3fc;
+  --primary-soft: #e0f2fe;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --bg-card: #ffffff;
+  --border: #f1f5f9;
+}
+
+/* Ensure form page sits below the fixed header and fills remaining height */
+.form-root {
+  margin-top: var(--header-height, 64px);
+  height: calc(100vh - var(--header-height, 64px));
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 24px;
+  display: flex;
+  flex-direction: column; /* stack header above the form box */
+  align-items: center; /* horizontal centering */
+  justify-content: center; /* vertical centering */
+  color: var(--text-main);
+  background: transparent;
+}
+
+/* header h2 kept for scale and weight (scoped to form) */
+.form-box .offer-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 2.25rem; /* match detailed-offer title scale */
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.1;
+}
+
+/* container that holds header + form so header spans the same width as the form box */
+.form-box {
+  max-width: 720px;
+  width: 100%;
+  background: var(--bg-card);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(16,24,40,0.04);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+.form-box form {
+  width: 100%;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  border: none;
+}
+.form-box .offer-header {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: center; /* centers the title */
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  padding: 0 20px; /* align with .form-box inner padding */
+}
+
+.form-box .offer-location {
+  position: absolute;
+  top: 12px;
+  right: 20px; /* align to inner right edge of the form box */
+  background: var(--primary-soft);
+  color: var(--primary);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+}
+/* scope inputs and textareas to the form card */
+.form-box input[type="text"],
+.form-box textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+/* checkboxes / radios stacked */
+/* scope checkbox/radio spacing to the form */
+.form-box input[type="checkbox"], .form-box input[type="radio"] {
+  margin-right: 8px;
+}
+
+.form-box .field-block {
+  margin-bottom: 18px;
+}
+
+.form-box button[type="submit"] {
+  background: var(--primary);
+  color: #043353;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.form-box button[type="submit"]:hover{
+  filter: brightness(0.98);
+}

@@ -1,6 +1,15 @@
 import './styles/detailedOffer.css';
+import { useNavigate } from "react-router-dom";
 
 export default function DetailedOffer({offer}) {
+  const navigate = useNavigate();
+
+  const handleApply = () => {
+    console.log('vers formulaire de l\'offre', offer.id);
+    //navigate("/form", { state: { offer: offer } });
+    navigate(`/form/${offer.id}`);
+  };
+
   return (
       <div className="detailed-offer">
           <h1>{offer.title}</h1>
@@ -13,6 +22,12 @@ export default function DetailedOffer({offer}) {
           
           <div className="detailed-description">
             {offer.description}
+          </div>
+
+          <div className="apply-row">
+            <button className="apply-btn" onClick={handleApply} aria-label={`Candidater à ${offer.title}`}>
+              Candidater
+            </button>
           </div>
       </div>
      );
