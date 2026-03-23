@@ -1,5 +1,6 @@
 import './styles/detailedOffer.css';
 import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 export default function DetailedOffer({offer}) {
   const navigate = useNavigate();
@@ -31,3 +32,14 @@ export default function DetailedOffer({offer}) {
       </div>
      );
 }
+
+DetailedOffer.propTypes = {
+  offer: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    title: PropTypes.string,
+    location: PropTypes.string,
+    contractType: PropTypes.string,
+    postedDate: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
+};

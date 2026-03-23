@@ -1,4 +1,5 @@
 import DetailedOffer from './detailedOffer';
+import PropTypes from 'prop-types';
 
 export default function SelectedOfferDetails({selectedOffer, setSelectedOffer}) {
     return(
@@ -17,3 +18,15 @@ export default function SelectedOfferDetails({selectedOffer, setSelectedOffer}) 
         </div>
     );
 }
+
+SelectedOfferDetails.propTypes = {
+  selectedOffer: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    title: PropTypes.string,
+    location: PropTypes.string,
+    contractType: PropTypes.string,
+    postedDate: PropTypes.string,
+    description: PropTypes.string,
+  }),
+  setSelectedOffer: PropTypes.func.isRequired,
+};
