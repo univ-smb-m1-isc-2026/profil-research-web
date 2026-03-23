@@ -1,4 +1,5 @@
 import './styles/headerHome.css';
+import { Link } from 'react-router-dom';
 
 export default function HeaderHome() {
   const handleLoginClick = () => {
@@ -10,7 +11,9 @@ export default function HeaderHome() {
     <header className="header-home">
       {/* Nom du site à gauche */}
       <div className="header-left">
-        <span className="site-title">Profil Research</span>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+          <span className="site-title">Profil Research</span>
+        </Link>
         <span className="site-subtitle">- Offres & profils</span>
       </div>
 
