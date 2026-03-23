@@ -1,0 +1,64 @@
+/* Header styles - pastel, light and matching project theme */
+.header-home {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: transparent;
+  border-bottom: 1px solid var(--border, #f1f5f9);
+  box-sizing: border-box;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-title {
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text-main, #0f172a);
+  letter-spacing: -0.01em;
+}
+
+.site-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted, #64748b);
+}
+
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0f9ff; /* pastel blue */
+  border: 1px solid #e6f6ff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #0369a1;
+  font-weight: 700;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-btn:focus {
+  outline: 3px solid rgba(7, 89, 133, 0.12);
+  outline-offset: 2px;
+}
+
+.login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(3, 105, 161, 0.06);
+}
+
+.login-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  color: inherit;
+}
+
+.login-label {
+  font-size: 0.95rem;
+}

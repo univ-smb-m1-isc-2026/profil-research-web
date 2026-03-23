@@ -1,0 +1,104 @@
+.detailed-offer {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  animation: fadeIn 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* fill the details-container height */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detailed-offer h1 {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.detailed-description {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #334155;
+  white-space: pre-wrap;
+  /* allow description to grow so apply button can be pushed to bottom when needed */
+  flex: 1 1 auto;
+  margin-bottom: 1rem;
+}
+
+.badges-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.location-badge {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.contract-badge {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.date-badge {
+  background: #f1f5f9;
+  color: #404a58;
+  border: 1px solid var(--border);
+}
+
+/* Apply button row */
+.apply-row {
+  display: flex;
+  justify-content: center;
+  /* push to bottom of the .detailed-offer using flexbox */
+  margin-top: auto;
+  padding: 0 12px;
+}
+
+.apply-btn {
+  background: var(--primary, #7dd3fc);
+  color: #043353;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(125, 211, 252, 0.12);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  width: min(720px, 92%); /* wide but responsive */
+  max-width: 100%;
+}
+
+.apply-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(125, 211, 252, 0.16);
+}
+
+.apply-btn:focus {
+  outline: 3px solid rgba(3, 105, 161, 0.12);
+  outline-offset: 3px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .detailed-offer h1 {
+    font-size: 2rem;
+  }
+}
