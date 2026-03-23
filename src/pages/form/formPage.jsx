@@ -6,7 +6,7 @@ export default function FormPage() {
     const { id } = useParams();
 
     const offerInfoMock = { title: 'Dev backend' , location: 'Paris' }
-    const location = useLocation();
+    
     // TODO: remplacer par fetch réel avec l'id
     const mockData = [
         { id: '1', title: 'Pourquoi souhaitez-vous postuler à cette offre ?', format: 'text' },
