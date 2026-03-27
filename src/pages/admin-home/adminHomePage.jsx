@@ -31,17 +31,28 @@ export default function AdminHomePage() {
         setOffers(prev => prev.map(o => o.id === id ? { ...o, visible } : o));
     };
 
+    const handleDeleteOffer = (id) => {
+        // Supprime l'offre de l'état local pour faire réagir l'interface
+        setOffers(prev => prev.filter(o => o.id !== id));
+        
+        // Si l'offre supprimée était celle affichée à droite, on ferme le détail
+        if (selectedOffer && selectedOffer.id === id) {
+            setSelectedOffer(null);
+        }
+    };
+
     return (
         <main className="app-content">
             <div className={`offers-container ${selectedOffer ? 'split-view' : 'full-view'}`}>
                 {offers && offers.length > 0 ? (
                 
-                offers?.map(off => (
+                offers.map(off => (
                     <AdminOffer 
                         key={off.id} 
                         offer={off} 
                         onVisibilityChange={handleVisibilityChange}
                         onViewMore={setSelectedOffer}
+                        onDelete={handleDeleteOffer}
                     />
                 )))
             : 

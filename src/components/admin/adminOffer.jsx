@@ -7,8 +7,8 @@ import DeleteButton from './buttons/deleteButton';
 import '../../components/candidateOffer/styles/offer.css';
 import './styles/adminOffer.css';
 
-export default function AdminOffer({ offer, onVisibilityChange, onViewMore }) {
-  const navigate = useNavigate();
+export default function AdminOffer({ offer, onVisibilityChange, onViewMore, onDelete }) {
+  //const navigate = useNavigate();
   //offer.visible expected to be boolean; fallback to true if undefined
 
   // 1. Initialise visible avec offer.visible
@@ -48,10 +48,10 @@ export default function AdminOffer({ offer, onVisibilityChange, onViewMore }) {
   const handleDelete = () => {
     if (window.confirm(`Êtes-vous sûr de vouloir supprimer l'offre "${offer.title}" ?`)) {
       console.log('Suppression de l\'offre ID :', offer.id);
-      /* 
-         TODO: Appel à la route de suppression
-         fetch(`/api/joboffer/delete/${offer.id}`, { method: 'DELETE' })
-      */
+      // Informe le parent que l'offre doit être supprimée de la vue
+      if (onDelete) {
+        onDelete(offer.id);
+      }
     }
   };
 
@@ -86,4 +86,5 @@ AdminOffer.propTypes = {
   }).isRequired,
   onVisibilityChange: PropTypes.func,
   onViewMore: PropTypes.func,
+  onDelete: PropTypes.func,
 };
