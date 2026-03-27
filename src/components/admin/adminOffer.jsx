@@ -16,20 +16,20 @@ export default function AdminOffer({ offer, onVisibilityChange }) {
     setVisible(next);
     setLoading(true);
     try {
-      // Replace URL with your real API endpoint
-      const res = await fetch(`/api/offers/${offer.id}/visibility`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ visible: next }),
-      });
-      if (!res.ok) {
-        throw new Error(`Server returned ${res.status}`);
-      }
-      const data = await res.json();
+      // TODO : mettre un fetch réel vers le back pour mettre à jour la visibilité de l'offre
+    //   const res = await fetch(`/api/offers/${offer.id}/visibility`, {
+    //     method: 'PATCH',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ visible: next }),
+    //   });
+    //   if (!res.ok) {
+    //     throw new Error(`Server returned ${res.status}`);
+    //   }
+    //   const data = await res.json();
       // call optional callback with server value (if provided)
-      if (onVisibilityChange) onVisibilityChange(offer.id, data.visible ?? next);
+      if (onVisibilityChange) onVisibilityChange(offer.id, offer.visible ?? next);
       // keep state as server confirmed value if provided
-      if (typeof data.visible === 'boolean') setVisible(data.visible);
+      if (typeof offer.visible === 'boolean') setVisible(offer.visible);
     } catch (err) {
       console.error('Failed to update visibility', err);
       // revert optimistic update on error
@@ -38,6 +38,8 @@ export default function AdminOffer({ offer, onVisibilityChange }) {
       setLoading(false);
     }
   };
+
+  console.log('AdminOffer render', offer, visible);
 
   return (
     <div className="offer-card admin-offer">

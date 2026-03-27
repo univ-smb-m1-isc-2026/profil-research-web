@@ -23,7 +23,11 @@ export default function OfferBox({offer, onClick}) {
         <h3 className="offer-title">{offer.title}</h3>
         <span className="location-tag">{offer.location}</span>
       </div>
-      <p className="offer-excerpt">{offer.description}</p>
+      <p className="offer-excerpt">{  
+        offer.description.length > 150 
+        ? offer.description.slice(0, 150) + '...' 
+        : offer.description
+      }</p>
     </div>
   );
 }
