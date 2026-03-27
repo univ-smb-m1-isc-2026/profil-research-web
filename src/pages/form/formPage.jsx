@@ -1,4 +1,5 @@
 import './formPage.css';
+import QuestionBox from '../../components/questions/questionBox';
 import { useParams } from "react-router-dom";
 import React, { useState } from 'react';
 
@@ -62,50 +63,15 @@ export default function FormPage() {
                   {headerLocation && <p className="offer-location">{headerLocation}</p>}
               </div>
               <form onSubmit={handleSubmit}>
-                {mockData.map(q => (
-                    <div key={q.id} style={{ marginBottom: 16 }}>
-                        <label style={{ display: 'block', marginBottom: 6 }}>{q.title}</label>
-
-                        {
-                        // ---------------- TEXT INPUT ----------------
-                        }
-                        {q.format === 'text' && (
-                            <input
-                                type="text"
-                                value={answers[q.id]}
-                                onChange={e => handleChangeText(q.id, e.target.value)}
-                                required
-                            />
-                        )}
-
-                        {
-                        // ---------------- CHECKBOX INPUT ----------------
-                        }
-                        {q.format === 'checkbox' && q.options?.map(opt => (
-                                <label key={opt} style={{ display: 'block' }}>
-                                    <input
-                                        type="checkbox"
-                                        checked={(answers[q.id] || []).includes(opt)}
-                                        onChange={() => handleChangeCheckbox(q.id, opt)}
-                                    />{' '}{opt}
-                                </label>
-                            ))}
-
-                        {
-                        // ---------------- RADIO INPUT ----------------
-                        }
-                        {q.format === 'radio' && q.options?.map(opt => (
-                                <label key={opt} style={{ display: 'block' }}>
-                                    <input
-                                        type="radio"
-                                        name={`q_${q.id}`}
-                                        checked={answers[q.id] === opt}
-                                        onChange={() => handleChangeRadio(q.id, opt)}
-                                        required
-                                    />{' '}{opt}
-                                </label>
-                            ))}
-                    </div>
+                {mockData.map(question => (
+                    <QuestionBox
+                        key={question.id}
+                        question={question}
+                        answers={answers}
+                        handleChangeText={handleChangeText}
+                        handleChangeCheckbox={handleChangeCheckbox}
+                        handleChangeRadio={handleChangeRadio}
+                    />
                 ))}
 
                 <button type="submit">Soumettre</button>
