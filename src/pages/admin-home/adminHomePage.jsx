@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AdminOffer from '../../components/admin/adminOffer';
 import AdminSelectedOfferDetails from '../../components/admin/adminSelectedOfferDetails';
-import mockOffers from '../../data/mockOffers';
+//import mockOffers from '../../data/mockOffers';
 
 export default function AdminHomePage() {
     const [offers, setOffers] = useState([]);
@@ -22,7 +22,7 @@ export default function AdminHomePage() {
         })
         .catch((error) => {
             console.error('Error fetching job offers:', error);
-            setOffers(mockOffers);
+            //setOffers(mockOffers);
         });
     }, []);
     // ---------------------------------------
