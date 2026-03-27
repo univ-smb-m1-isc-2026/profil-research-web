@@ -1,3 +1,7 @@
+/*
+    Component to render a question with its corresponding input type (text, checkbox, radio).
+*/
+
 export default function QuestionBox({ question, answers, handleChangeText, handleChangeCheckbox, handleChangeRadio }) {
    return (
      <div key={question.id} style={{ marginBottom: 16 }}>

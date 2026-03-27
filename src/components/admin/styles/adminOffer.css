@@ -7,7 +7,45 @@
 .admin-actions {
   display: flex;
   justify-content: flex-end;
+  gap: 12px;
   margin-top: 12px;
+}
+
+.view-more-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  color: #334155;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.view-more-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.delete-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #fee2e2;
+  background: #fef2f2;
+  color: #991b1b;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.delete-btn:hover {
+  background: #fee2e2;
+  border-color: #f87171;
+  color: #7f1d1d;
 }
 
 .visibility-toggle {

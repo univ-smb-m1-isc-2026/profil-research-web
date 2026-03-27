@@ -7,6 +7,7 @@ export default function HomePage() {
 
     const [offer, setOffer] = useState(null);
     const [selectedOffer, setSelectedOffer] = useState(null);
+    // -------------- FETCH API --------------
     useEffect(() => {
         fetch('http://localhost:8080/api/joboffer/getAllPublic')
         .then((response) => {
@@ -26,6 +27,7 @@ export default function HomePage() {
             setOffer(JSON.parse(mockData));
         });
     }, []);
+    // ---------------------------------------
 
     return (
         <main className="app-content">

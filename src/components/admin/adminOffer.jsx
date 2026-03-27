@@ -1,45 +1,59 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import VisibilityToggle from './buttons/visibilityToggle';
+import ViewMoreButton from './buttons/viewMoreButton';
+import DeleteButton from './buttons/deleteButton';
 import '../../components/candidateOffer/styles/offer.css';
 import './styles/adminOffer.css';
 
-export default function AdminOffer({ offer, onVisibilityChange }) {
-//   offer.visible expected to be boolean; fallback to true if undefined
-  const [visible, setVisible] = useState(
-    typeof offer.visible === 'boolean' ? offer.visible : true
-  );
+export default function AdminOffer({ offer, onVisibilityChange, onViewMore }) {
+  const navigate = useNavigate();
+  //offer.visible expected to be boolean; fallback to true if undefined
+
+  // 1. Initialise visible avec offer.visible
+  const [visible, setVisible] = useState(offer.visible || false);
   const [loading, setLoading] = useState(false);
 
+  // 2. Fonction corrigée avec simulation réseau
   const toggleVisibility = async () => {
     const next = !visible;
-    // optimistic update
+    // Optimistic update
     setVisible(next);
     setLoading(true);
+    
     try {
-      // TODO : mettre un fetch réel vers le back pour mettre à jour la visibilité de l'offre
-    //   const res = await fetch(`/api/offers/${offer.id}/visibility`, {
-    //     method: 'PATCH',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ visible: next }),
-    //   });
-    //   if (!res.ok) {
-    //     throw new Error(`Server returned ${res.status}`);
-    //   }
-    //   const data = await res.json();
-      // call optional callback with server value (if provided)
-      if (onVisibilityChange) onVisibilityChange(offer.id, offer.visible ?? next);
-      // keep state as server confirmed value if provided
-      if (typeof offer.visible === 'boolean') setVisible(offer.visible);
+      // Simulation d'appel réseau
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Appel du callback parent pour synchroniser la liste canonical
+      if (onVisibilityChange) {
+        onVisibilityChange(offer.id, next);
+      }
     } catch (err) {
       console.error('Failed to update visibility', err);
-      // revert optimistic update on error
+      // Revert optimistic
       setVisible(!next);
     } finally {
       setLoading(false);
     }
   };
 
-  console.log('AdminOffer render', offer, visible);
+  const handleViewMore = () => {
+    if (onViewMore) {
+      onViewMore(offer);
+    }
+  };
+
+  const handleDelete = () => {
+    if (window.confirm(`Êtes-vous sûr de vouloir supprimer l'offre "${offer.title}" ?`)) {
+      console.log('Suppression de l\'offre ID :', offer.id);
+      /* 
+         TODO: Appel à la route de suppression
+         fetch(`/api/joboffer/delete/${offer.id}`, { method: 'DELETE' })
+      */
+    }
+  };
 
   return (
     <div className="offer-card admin-offer">
@@ -50,16 +64,13 @@ export default function AdminOffer({ offer, onVisibilityChange }) {
       <p className="offer-excerpt">{offer.description}</p>
 
       <div className="admin-actions">
-        <button
-          type="button"
-          className={`visibility-toggle ${visible ? 'on' : 'off'}`}
-          onClick={toggleVisibility}
-          disabled={loading}
-          aria-pressed={offer.visible}
-          aria-label={offer.visible ? 'Rendre l\'offre invisible' : 'Rendre l\'offre visible'}
-        >
-          {offer.visible ? 'Visible' : 'Invisible'}
-        </button>
+        <ViewMoreButton onClick={handleViewMore} />
+        <VisibilityToggle 
+          visible={visible} 
+          loading={loading} 
+          onToggle={toggleVisibility} 
+        />
+        <DeleteButton onClick={handleDelete} />
       </div>
     </div>
   );
@@ -74,4 +85,5 @@ AdminOffer.propTypes = {
     visible: PropTypes.bool,
   }).isRequired,
   onVisibilityChange: PropTypes.func,
+  onViewMore: PropTypes.func,
 };
