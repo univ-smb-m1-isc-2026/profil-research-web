@@ -32,13 +32,28 @@ export default function AdminHomePage() {
     };
 
     const handleDeleteOffer = (id) => {
-        // Supprime l'offre de l'état local pour faire réagir l'interface
-        setOffers(prev => prev.filter(o => o.id !== id));
-        
-        // Si l'offre supprimée était celle affichée à droite, on ferme le détail
-        if (selectedOffer && selectedOffer.id === id) {
-            setSelectedOffer(null);
-        }
+        fetch(`http://localhost:8080/api/joboffer/delete/${id}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            // Supprime l'offre de l'état local pour faire réagir l'interface
+            setOffers(prev => prev.filter(o => o.id !== id));
+            
+            // Si l'offre supprimée était celle affichée à droite, on ferme le détail
+            if (selectedOffer && selectedOffer.id === id) {
+                setSelectedOffer(null);
+            }
+            return response.text();
+        })
+        .then(message => {
+            console.log('Backend response:', message);
+        })
+        .catch(error => {
+            console.error('Error deleting job offer:', error);
+        });
     };
 
     return (

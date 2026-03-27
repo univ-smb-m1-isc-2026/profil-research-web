@@ -11,29 +11,58 @@ export default function AdminOffer({ offer, onVisibilityChange, onViewMore, onDe
   //const navigate = useNavigate();
   //offer.visible expected to be boolean; fallback to true if undefined
 
-  // 1. Initialise visible avec offer.visible
-  const [visible, setVisible] = useState(offer.visible || false);
+  // 1. Initialise visible en supportant plusieurs noms renvoyés par le back
+  // Le backend Java expose la propriété sous le nom `public` dans le JSON
+  // (parfois généré depuis un boolean `isPublic` en Java). On lit donc
+  // `offer.isPublic` ou `offer.public` selon ce qui existe.
+  const [visible, setVisible] = useState(
+    (offer.isPublic === true) || (offer.public === true) || false
+  );
   const [loading, setLoading] = useState(false);
 
-  // 2. Fonction corrigée avec simulation réseau
+  // Synchronisation si les props changent (important si la liste est re-fetchée)
+  React.useEffect(() => {
+    setVisible((offer.isPublic === true) || (offer.public === true) || false);
+  }, [offer.isPublic, offer.public]);
+
+  // 2. Fonction mise à jour pour appeler le backend
   const toggleVisibility = async () => {
+    // Si déjà en cours on ne fait rien
+    if (loading) return;
+
     const next = !visible;
-    // Optimistic update
-    setVisible(next);
     setLoading(true);
-    
+
+    console.log("OFFER ID: ", offer.id);
     try {
-      // Simulation d'appel réseau
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const response = await fetch(`http://localhost:8080/api/joboffer/editIsPublic/${offer.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Le back renvoie une String, on ne peut pas faire .json()
+      //const message = await response;
+      console.log('Backend response:', response);
       
-      // Appel du callback parent pour synchroniser la liste canonical
+      // On ne change l'UI QUE si le serveur a répondu OK
+      setVisible(next);
+
+      // Notification au parent pour garder la synchro globale
       if (onVisibilityChange) {
         onVisibilityChange(offer.id, next);
       }
-    } catch (err) {
-      console.error('Failed to update visibility', err);
-      // Revert optimistic
-      setVisible(!next);
+    } catch (error) {
+      console.error('Error updating visibility:', error);
+      // L'UI reste à l'état précédent car setVisible(next) n'a pas été appelé ou est géré par le catch
     } finally {
       setLoading(false);
     }
