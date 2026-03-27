@@ -9,11 +9,11 @@ export default function HomePage() {
     const [selectedOffer, setSelectedOffer] = useState(null);
     // -------------- FETCH API --------------
     useEffect(() => {
-        fetch('http://localhost:8080/api/joboffer/getAllPublic')
+        fetch('https://psjob-api.oups.net/api/joboffer/getAllPublic')
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            }   
             return response.json();
         })
         .then((data) => {
