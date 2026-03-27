@@ -71,7 +71,8 @@
 
 .offers-container.full-view {
   width: 100%;
-  max-width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .offers-container.split-view {

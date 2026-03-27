@@ -1,0 +1,78 @@
+/* Admin-specific styles for offer card actions */
+.admin-offer {
+  position: relative;
+  padding-bottom: 12px; /* space for admin actions */
+}
+
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.view-more-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  color: #334155;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.view-more-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.delete-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #fee2e2;
+  background: #fef2f2;
+  color: #991b1b;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.delete-btn:hover {
+  background: #fee2e2;
+  border-color: #f87171;
+  color: #7f1d1d;
+}
+
+.visibility-toggle {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border, #f1f5f9);
+  background: var(--bg-card, #fff);
+  color: var(--text-main, #0f172a);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.visibility-toggle.on {
+  /* Visible: green background */
+  background: var(--accent-green, #dcfce7);
+  color: #065f46; /* darker green */
+  border-color: rgba(6,95,70,0.12);
+}
+
+.visibility-toggle.off {
+  /* Invisible: gray/disabled look */
+  background: #f3f4f6; /* gray-100 */
+  color: #374151; /* gray-700 for sufficient contrast */
+  border-color: rgba(99,102,241,0.04);
+}
+
+.visibility-toggle:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
