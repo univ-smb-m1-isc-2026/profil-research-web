@@ -1,9 +1,9 @@
 import './styles/detailedOffer.css';
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 export default function DetailedOffer({offer}) {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const handleApply = () => {
     console.log('vers formulaire de l\'offre', offer.id);
