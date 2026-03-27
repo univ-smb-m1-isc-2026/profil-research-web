@@ -1,0 +1,98 @@
+@import '../../App.css';
+
+.admin-create-offer-container {
+    max-width: 800px;
+    margin: calc(var(--header-height) + 40px) auto 40px;
+    padding: 2rem;
+    background: var(--bg-card);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.create-offer-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 1rem;
+}
+
+.create-offer-header h1 {
+    color: var(--text-main);
+    font-size: 1.875rem;
+    font-weight: 700;
+}
+
+.offer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-dark);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-light);
+}
+
+.btn-primary {
+    background: var(--primary);
+    border: 1px solid var(--primary-dark);
+    color: var(--text-main);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
