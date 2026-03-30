@@ -1,4 +1,4 @@
-import './styles/detailedOffer.css';
+import '../styles/detailedOffer.css';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 

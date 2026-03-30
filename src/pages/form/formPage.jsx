@@ -1,5 +1,5 @@
 import './formPage.css';
-import QuestionBox from '../../components/questions/questionBox';
+import QuestionBox from '../../components/questions/QuestionBox';
 import { useParams } from "react-router-dom";
 import React, { useState } from 'react';
 

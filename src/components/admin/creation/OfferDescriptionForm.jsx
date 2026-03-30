@@ -42,7 +42,6 @@ const OfferDescriptionForm = ({ formData, handleChange }) => {
                         <option value="CDD">CDD</option>
                         <option value="Stage">Stage</option>
                         <option value="Alternance">Alternance</option>
-                        <option value="Freelance">Freelance</option>
                     </select>
                 </div>
             </div>

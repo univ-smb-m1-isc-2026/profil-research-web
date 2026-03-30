@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import VisibilityToggle from './buttons/visibilityToggle';
-import ViewMoreButton from './buttons/viewMoreButton';
-import DeleteButton from './buttons/deleteButton';
-import '../../components/candidateOffer/styles/offer.css';
-import './styles/adminOffer.css';
+import VisibilityToggle from '../buttons/VisibilityToggle';
+import ViewMoreButton from '../buttons/ViewMoreButton';
+import DeleteButton from '../buttons/DeleteButton';
+import '../../candidateOffer/styles/offer.css';
+import '../styles/adminOffer.css';
 
 export default function AdminOffer({ offer, onVisibilityChange, onViewMore, onDelete }) {
   //const navigate = useNavigate();

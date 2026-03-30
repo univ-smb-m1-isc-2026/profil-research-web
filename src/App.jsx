@@ -1,10 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/home/homePage';
 import FormPage from './pages/form/formPage';
-import HeaderHome from './components/mainComponents/headerHome';
+import HeaderHome from './components/mainComponents/HeaderHome';
 import AdminHomePage from './pages/admin-home/adminHomePage';
 import AdminCreateOfferPage from './pages/admin-create-offer/AdminCreateOfferPage';
-import ProtectedRoute from './components/ProtectedRoute';
+import AdminCandidatesPage from './pages/admin-candidates/AdminCandidatesPage';
+import ProtectedRoute from './components/mainComponents/ProtectedRoute';
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
         <Route 
           path="/create-offer" 
           element={<ProtectedRoute><AdminCreateOfferPage /></ProtectedRoute>} 
+        />
+        <Route 
+          path="/admin/offer/:offerId/candidates" 
+          element={<ProtectedRoute><AdminCandidatesPage /></ProtectedRoute>} 
         />
       </Routes>
     </div>

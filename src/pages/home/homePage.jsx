@@ -1,7 +1,7 @@
 import './homePage.css';
 import React, { useEffect, useState } from 'react';
-import OfferBox from '../../components/candidateOffer/offer';
-import SelectedOfferDetails from '../../components/candidateOffer/selectedOfferDetails';
+import OfferBox from '../../components/candidateOffer/offer-item/Offer';
+import SelectedOfferDetails from '../../components/candidateOffer/offer-details/SelectedOfferDetails';
 
 export default function HomePage() {
 

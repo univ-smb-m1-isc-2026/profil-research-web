@@ -1,4 +1,4 @@
-import './styles/offer.css';
+import '../styles/offer.css';
 import PropTypes from 'prop-types';
 
 export default function OfferBox({offer, onClick}) {

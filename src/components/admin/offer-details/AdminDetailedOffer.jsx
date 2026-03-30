@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../../components/candidateOffer/styles/detailedOffer.css';
+import { useNavigate } from 'react-router-dom';
+import '../../candidateOffer/styles/detailedOffer.css';
 
 const AdminDetailedOffer = ({ offer }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="detailed-offer">
       <h1>{offer.title}</h1>
@@ -28,6 +31,16 @@ const AdminDetailedOffer = ({ offer }) => {
            <li className="question-item">Comment gérez-vous le stress ? (Exemple)</li>
            <li className="question-item">Dites-nous en plus sur vos précédentes expériences. (Exemple)</li>
         </ul>
+      </div>
+
+      <div className="admin-actions-footer" style={{ marginTop: '3rem', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
+        <button 
+          className="btn-submit" 
+          style={{ width: '100%' }}
+          onClick={() => navigate(`/admin/offer/${offer.id}/candidates`)}
+        >
+          Voir les candidats
+        </button>
       </div>
     </div>
   );

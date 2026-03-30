@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import OfferDescriptionForm from './components/OfferDescriptionForm';
-import QuestionsManager from './components/QuestionsManager';
+import OfferDescriptionForm from '../../components/admin/creation/OfferDescriptionForm';
+import QuestionsManager from '../../components/admin/creation/QuestionsManager';
 import './AdminCreateOfferPage.css';
 
 const AdminCreateOfferPage = () => {

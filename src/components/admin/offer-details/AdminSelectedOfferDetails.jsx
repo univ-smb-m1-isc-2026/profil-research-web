@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AdminDetailedOffer from './adminDetailedOffer';
+import AdminDetailedOffer from './AdminDetailedOffer';
 
 export default function AdminSelectedOfferDetails({ selectedOffer, setSelectedOffer }) {
     return (

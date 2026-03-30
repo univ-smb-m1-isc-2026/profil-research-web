@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import AdminOffer from '../../components/admin/adminOffer';
-import AdminSelectedOfferDetails from '../../components/admin/adminSelectedOfferDetails';
+import AdminOffer from '../../components/admin/offer-item/AdminOffer';
+import AdminSelectedOfferDetails from '../../components/admin/offer-details/AdminSelectedOfferDetails';
 //import mockOffers from '../../data/mockOffers';
 
 export default function AdminHomePage() {
