@@ -1,10 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import '../../candidateOffer/styles/detailedOffer.css';
 
 const AdminDetailedOffer = ({ offer }) => {
   const navigate = useNavigate();
+  const [questions, setQuestions] = useState([]);
+  const [loadingQuestions, setLoadingQuestions] = useState(true);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      setLoadingQuestions(true);
+      try {
+        const response = await fetch(`http://localhost:8080/api/joboffer/getAllQuestion/${offer.id}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const normalizedQuestions = (data || [])
+          .sort((a, b) => (a.question_number ?? 0) - (b.question_number ?? 0))
+          .map((item) => ({
+            id: item.id ?? item.id_question?.id,
+            title: item.id_question?.title ?? 'Question',
+          }));
+
+        setQuestions(normalizedQuestions);
+      } catch (error) {
+        console.error('Error fetching offer questions:', error);
+        setQuestions([]);
+      } finally {
+        setLoadingQuestions(false);
+      }
+    };
+
+    if (offer?.id) {
+      fetchQuestions();
+    }
+  }, [offer?.id]);
 
   return (
     <div className="detailed-offer">
@@ -22,15 +55,23 @@ const AdminDetailedOffer = ({ offer }) => {
 
       <div className="questions-section" style={{ marginTop: '2rem' }}>
         <h3>Questions associées</h3>
-        {/* 
-          TODO: Fetch questions 
-          fetch(`/api/offers/${offer.id}/questions`)
-        */}
-        <p style={{ fontStyle: 'italic', color: '#64748b' }}>Chargement des questions...</p>
-        <ul className="questions-list">
-           <li className="question-item">Comment gérez-vous le stress ? (Exemple)</li>
-           <li className="question-item">Dites-nous en plus sur vos précédentes expériences. (Exemple)</li>
-        </ul>
+        {loadingQuestions && (
+          <p style={{ fontStyle: 'italic', color: '#64748b' }}>Chargement des questions...</p>
+        )}
+
+        {!loadingQuestions && questions.length === 0 && (
+          <p style={{ fontStyle: 'italic', color: '#64748b' }}>
+            Aucune question associée à cette offre.
+          </p>
+        )}
+
+        {!loadingQuestions && questions.length > 0 && (
+          <ul className="questions-list">
+            {questions.map((question) => (
+              <li key={question.id} className="question-item">{question.title}</li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <div className="admin-actions-footer" style={{ marginTop: '3rem', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>

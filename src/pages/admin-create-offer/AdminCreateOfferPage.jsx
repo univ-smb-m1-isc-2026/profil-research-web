@@ -56,14 +56,26 @@ const AdminCreateOfferPage = () => {
     };
 
     const handleSubmit = async () => {
-        const fullOffer = { ...formData, questions };
+        const payload = {
+            title: formData.title,
+            description: formData.description,
+            isPublic: formData.isPublic,
+            contractType: formData.contractType,
+            location: formData.location,
+            // Le backend attend toujours une liste (sinon NPE côté service)
+            // Les questions custom ne sont pas encore persistées en base ici,
+            // on envoie donc une liste vide pour garantir la création de l'offre.
+            id_question: [],
+        };
+
         try {
             const response = await fetch('http://localhost:8080/api/joboffer/addJobOffer', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(fullOffer),
+                body: JSON.stringify(payload),
             });
 
+            console.log('Response status:', response.status);
             if (response.ok) {
                 alert('Offre créée avec succès !');
                 navigate('/admin');

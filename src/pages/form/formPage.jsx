@@ -1,29 +1,65 @@
 import './formPage.css';
 import QuestionBox from '../../components/questions/QuestionBox';
 import { useParams } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 export default function FormPage() {
     const { id } = useParams();
     console.log('offer id from url', id);
 
     const offerInfoMock = { title: 'Dev backend' , location: 'Paris' }
-    
-    // TODO: remplacer par fetch réel avec l'id
-    const mockData = [
-        { id: '1', title: 'Pourquoi souhaitez-vous postuler à cette offre ?', format: 'text' },
-        { id: '2', title: 'Avez-vous de l\'expérience avec les technologies suivantes ? (React, Node.js, etc.)', format: 'checkbox', options: ['React', 'Node.js', 'Angular', 'Vue.js'] },
-        { id: '3', title: 'Quel est votre niveau de maîtrise de JavaScript ?', format: 'radio', options: ['Débutant', 'Intermédiaire', 'Avancé'] }
-    ];
 
-    // initial answers
-    const initial = {};
-    mockData.forEach(q => {
-        if (q.format === 'checkbox') initial[q.id] = [];
-        else initial[q.id] = '';
-    });
+    const [questions, setQuestions] = useState([]);
+    const [answers, setAnswers] = useState({});
+    const [loadingQuestions, setLoadingQuestions] = useState(true);
 
-    const [answers, setAnswers] = useState(initial);
+    useEffect(() => {
+        const fetchQuestions = async () => {
+            setLoadingQuestions(true);
+            try {
+                const response = await fetch(`http://localhost:8080/api/joboffer/getAllQuestion/${id}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log(data)
+
+                const normalizedQuestions = (data || [])
+                    .sort((a, b) => (a.question_number ?? 0) - (b.question_number ?? 0))
+                    .map((item) => ({
+                        id: String(item.id_question?.id ?? item.id),
+                        title: item.id_question?.title ?? 'Question',
+                        format: (item.id_question?.format || 'TEXT').toLowerCase(),
+                        options: item.id_question?.choices || [],
+                    }));
+
+                setQuestions(normalizedQuestions);
+            } catch (error) {
+                console.error('Error fetching questions:', error);
+                setQuestions([]);
+            } finally {
+                setLoadingQuestions(false);
+            }
+        };
+
+        if (id) {
+            fetchQuestions();
+        }
+    }, [id]);
+
+    const initialAnswers = useMemo(() => {
+        const initial = {};
+        questions.forEach((q) => {
+            if (q.format === 'checkbox') initial[q.id] = [];
+            else initial[q.id] = '';
+        });
+        return initial;
+    }, [questions]);
+
+    useEffect(() => {
+        setAnswers(initialAnswers);
+    }, [initialAnswers]);
 
     const handleChangeText = (qid, value) => {    
         // Sécurité pour limiter les caractères autorisés et donc éviter les injections    
@@ -63,7 +99,13 @@ export default function FormPage() {
                   {headerLocation && <p className="offer-location">{headerLocation}</p>}
               </div>
               <form onSubmit={handleSubmit}>
-                {mockData.map(question => (
+                                {loadingQuestions && <p>Chargement des questions...</p>}
+
+                                {!loadingQuestions && questions.length === 0 && (
+                                        <p>Aucune question n'est associée à cette offre pour le moment.</p>
+                                )}
+
+                                {!loadingQuestions && questions.map(question => (
                     <QuestionBox
                         key={question.id}
                         question={question}
