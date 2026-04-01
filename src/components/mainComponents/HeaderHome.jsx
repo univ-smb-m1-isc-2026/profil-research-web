@@ -11,8 +11,7 @@ export default function HeaderHome() {
       setAdmin(null);
       navigate('/');
     } else {
-      setAdmin({"mail": "admin@profilresearch.com", "name": "Admin"});
-      navigate('/admin');
+      navigate('/login');
     }
   };
 

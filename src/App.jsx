@@ -6,6 +6,7 @@ import AdminHomePage from './pages/admin-home/adminHomePage';
 import AdminCreateOfferPage from './pages/admin-create-offer/AdminCreateOfferPage';
 import AdminCandidatesPage from './pages/admin-candidates/AdminCandidatesPage';
 import ProtectedRoute from './components/mainComponents/ProtectedRoute';
+import LoginPage from './pages/login/LoginPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} /> 
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/form/:id" element={<FormPage />} />
         <Route
           path="/admin"

@@ -6,7 +6,7 @@ export default function ProtectedRoute({ children }) {
 
     // Si pas admin connecté -> redirige vers la page d’accueil
     if (!admin) {
-        return <Navigate to="/" replace />;
+        return <Navigate to="/login" replace />;
     }
 
     // Sinon -> affiche le composant enfant
