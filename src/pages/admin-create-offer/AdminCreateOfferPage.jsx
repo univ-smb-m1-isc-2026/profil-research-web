@@ -31,6 +31,24 @@ const AdminCreateOfferPage = () => {
         options: ''
     });
 
+    const handleSelectExistingQuestion = (savedQuestion) => {
+        // Éviter d'ajouter deux fois la même question
+        if (questions.some(q => q.id === savedQuestion.id)) {
+            alert('Cette question est déjà ajoutée à l\'offre.');
+            return;
+        }
+
+        const q = {
+            id: savedQuestion.id,
+            text: savedQuestion.title,
+            type: (savedQuestion.format || 'TEXT').toLowerCase(),
+            required: false,
+            options: savedQuestion.choices || []
+        };
+        
+        setQuestions([...questions, q]);
+    };
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({
@@ -147,6 +165,7 @@ const AdminCreateOfferPage = () => {
                         newQuestion={newQuestion}
                         setNewQuestion={setNewQuestion}
                         handleAddQuestion={handleAddQuestion}
+                        onSelectExisting={handleSelectExistingQuestion}
                     />
                     <div className="form-actions" style={{ marginTop: '3rem' }}>
                         <button type="button" className="btn-cancel" onClick={() => setStep(1)}>
