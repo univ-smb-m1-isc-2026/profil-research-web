@@ -19,8 +19,9 @@ const AdminCreateOfferPage = () => {
     });
 
     const [questions, setQuestions] = useState([
-        { id: 1, text: 'Nom du candidat', type: 'text', required: true, options: [] },
-        { id: 2, text: 'Prénom du candidat', type: 'text', required: true, options: [] }
+        { id: 'base-1', text: 'Nom du candidat', type: 'text', required: true, options: [] },
+        { id: 'base-2', text: 'Prénom du candidat', type: 'text', required: true, options: [] },
+        { id: 'base-3', text: 'Adresse Email', type: 'text', required: true, options: [] }
     ]);
 
     const [isAddingQuestion, setIsAddingQuestion] = useState(false);
@@ -30,6 +31,24 @@ const AdminCreateOfferPage = () => {
         options: ''
     });
 
+    const handleSelectExistingQuestion = (savedQuestion) => {
+        // Éviter d'ajouter deux fois la même question
+        if (questions.some(q => q.id === savedQuestion.id)) {
+            alert('Cette question est déjà ajoutée à l\'offre.');
+            return;
+        }
+
+        const q = {
+            id: savedQuestion.id,
+            text: savedQuestion.title,
+            type: (savedQuestion.format || 'TEXT').toLowerCase(),
+            required: false,
+            options: savedQuestion.choices || []
+        };
+        
+        setQuestions([...questions, q]);
+    };
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({
@@ -38,22 +57,46 @@ const AdminCreateOfferPage = () => {
         }));
     };
 
-    const handleAddQuestion = () => {
+    const handleAddQuestion = async () => {
         const optionsArray = newQuestion.options 
             ? newQuestion.options.split(',').map(o => o.trim()).filter(o => o !== '') 
             : [];
             
-        const q = {
-            id: Date.now(),
-            text: newQuestion.text,
-            type: newQuestion.type,
-            required: false,
-            options: optionsArray
-        };
-        
-        setQuestions([...questions, q]);
-        setNewQuestion({ text: '', type: 'text', options: '' });
-        setIsAddingQuestion(false);
+        let formatType = newQuestion.type.toUpperCase();
+
+        try {
+            const response = await fetch(`${API_URL}/api/question/addQuestion`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: newQuestion.text,
+                    format: formatType,
+                    choices: optionsArray.length > 0 ? optionsArray : null
+                })
+            });
+
+            if (response.ok) {
+                const savedQuestion = await response.json();
+                
+                const q = {
+                    id: savedQuestion.id,
+                    text: savedQuestion.title,
+                    type: (savedQuestion.format || 'TEXT').toLowerCase(),
+                    required: false,
+                    options: savedQuestion.choices || []
+                };
+                
+                setQuestions([...questions, q]);
+                setNewQuestion({ text: '', type: 'text', options: '' });
+                setIsAddingQuestion(false);
+            } else {
+                console.error('Erreur lors de la création de la question');
+                alert('Erreur lors de la création de la question. Veuillez réessayer.');
+            }
+        } catch (error) {
+            console.error('Error adding question:', error);
+            alert('Erreur réseau lors de la création de la question.');
+        }
     };
 
     const handleSubmit = async () => {
@@ -63,10 +106,7 @@ const AdminCreateOfferPage = () => {
             isPublic: formData.isPublic,
             contractType: formData.contractType,
             location: formData.location,
-            // Le backend attend toujours une liste (sinon NPE côté service)
-            // Les questions custom ne sont pas encore persistées en base ici,
-            // on envoie donc une liste vide pour garantir la création de l'offre.
-            id_question: [],
+            id_question: questions.filter(q => typeof q.id === 'number').map(q => q.id),
         };
 
         try {
@@ -125,6 +165,7 @@ const AdminCreateOfferPage = () => {
                         newQuestion={newQuestion}
                         setNewQuestion={setNewQuestion}
                         handleAddQuestion={handleAddQuestion}
+                        onSelectExisting={handleSelectExistingQuestion}
                     />
                     <div className="form-actions" style={{ marginTop: '3rem' }}>
                         <button type="button" className="btn-cancel" onClick={() => setStep(1)}>

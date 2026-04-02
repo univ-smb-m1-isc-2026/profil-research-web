@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import CandidateItem from '../../components/admin/candidate-item/CandidateItem';
 import CandidateDetails from '../../components/admin/candidate-details/CandidateDetails';
 import { API_URL } from '../../config';
@@ -8,14 +8,54 @@ import './AdminCandidatesPage.css';
 const AdminCandidatesPage = () => {
     const { offerId } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [candidates, setCandidates] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [candidateResponses, setCandidateResponses] = useState([]);
     const [loadingResponses, setLoadingResponses] = useState(false);
+    const [offerTitle, setOfferTitle] = useState(location.state?.offerTitle || '');
+
+    const handleDeleteCandidate = async (e, candidateId) => {
+        e.stopPropagation();
+        if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce candidat ?")) return;
+
+        try {
+            const response = await fetch(`${API_URL}/api/application/delete/${candidateId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                setCandidates(prev => prev.filter(c => c.id !== candidateId));
+                if (selectedCandidate?.id === candidateId) {
+                    setSelectedCandidate(null);
+                    setCandidateResponses([]);
+                }
+            } else {
+                alert("Erreur lors de la suppression du candidat.");
+            }
+        } catch (error) {
+            console.error("Erreur:", error);
+            alert("Erreur réseau lors de la suppression.");
+        }
+    };
 
     useEffect(() => {
+        const fetchOfferDetails = async () => {
+            if (offerTitle) return; // Skip if we already have it from location state
+
+            try {
+                const response = await fetch(`${API_URL}/api/joboffer/getJobOfferById/${offerId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setOfferTitle(data.title);
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement des détails de l\'offre:', error);
+            }
+        };
+
         const fetchCandidates = async () => {
             try {
                 const response = await fetch(`${API_URL}/api/application/getApplicationByJobOffer/${offerId}`);
@@ -32,6 +72,7 @@ const AdminCandidatesPage = () => {
             }
         };
 
+        fetchOfferDetails();
         fetchCandidates();
     }, [offerId]);
 
@@ -73,6 +114,7 @@ const AdminCandidatesPage = () => {
                         candidate={candidate}
                         isSelected={selectedCandidate?.id === candidate.id}
                         onClick={handleCandidateClick}
+                        onDelete={(e) => handleDeleteCandidate(e, candidate.id)}
                     />
                 ))}
             </div>
@@ -85,7 +127,7 @@ const AdminCandidatesPage = () => {
                 <button className="back-btn" onClick={() => navigate('/admin')} type="button">
                     Retour
                 </button>
-                <h1>Candidats pour l'offre #{offerId}</h1>
+                <h1>Candidats pour l'offre : {offerTitle}</h1>
             </header>
 
             <div className={`admin-candidates-content ${selectedCandidate ? 'split-view' : ''}`}>
