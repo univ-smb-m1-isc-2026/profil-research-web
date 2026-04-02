@@ -89,3 +89,102 @@
   transform: translateY(-1px);
   box-shadow: 0 6px 18px rgba(3, 105, 161, 0.06);
 }
+
+/* Admin navigation styles */
+.admin-nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Burger Button */
+.burger-menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 101;
+}
+
+.burger-menu-btn span {
+  width: 2rem;
+  height: 0.25rem;
+  background: #0369a1;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+.burger-menu-btn.open span:first-child {
+  transform: rotate(45deg);
+}
+
+.burger-menu-btn.open span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.burger-menu-btn.open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+/* Mobile Nav Overlay */
+.admin-nav-mobile {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 250px;
+  background: white;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+  padding: 80px 20px 20px;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 100;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(100%);
+}
+
+.admin-nav-mobile.open {
+  transform: translateX(0);
+  display: flex;
+}
+
+.mobile-nav-link {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0369a1;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f0f9ff;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.login-mobile {
+  background: #f0f9ff;
+  color: #0369a1;
+}
+
+@media (max-width: 768px) {
+  .admin-nav-desktop {
+    display: none;
+  }
+
+  .burger-menu-btn {
+    display: flex;
+  }
+
+  .admin-nav-mobile {
+    display: flex;
+  }
+}
