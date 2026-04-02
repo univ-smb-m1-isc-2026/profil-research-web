@@ -7,7 +7,7 @@ import { AdminProvider } from "./context/AdminContext";
 import reportWebVitals from './reportWebVitals';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-const CLIENT_ID = "504901826540-eqer87cu06fvc1lo9qcqrmm13qvcnujh.apps.googleusercontent.com"
+const CLIENT_ID = "412714806684-ve8e8988ban8j55uieudr7om2ktvkvt6.apps.googleusercontent.com";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

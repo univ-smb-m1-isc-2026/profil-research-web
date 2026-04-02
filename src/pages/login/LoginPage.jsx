@@ -1,63 +1,19 @@
 // import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAdmin } from '../../context/AdminContext';
 import './loginPage.css';
-import { GoogleLogin } from '@react-oauth/google';
+import { API_URL } from '../../config';
 
 export default function LoginPage() {
-  // const [login, setLogin] = useState('');
-  // const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-  const { setAdmin } = useAdmin();
-
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  //   if (login && password) {
-  //     // Pour l'instant, aucune vérification réelle du mot de passe ou login au backend
-  //     setAdmin({ mail: login, name: "Admin" });
-  //     navigate('/admin');
-  //   }
-  // };
+  const handleLogin = () => {
+    window.location.href = `${API_URL}/oauth2/authorization/google`;
+  };
 
   return (
     <div className="login-page">
       <div className="login-card">
         <h2>Connexion Administrateur</h2>
-        <GoogleLogin 
-            onSuccess={(credentialResponse) => {
-                console.log(credentialResponse);
-                setAdmin({ mail: "social_login@mail.com", name: "Admin" });
-                navigate('/admin');
-            }} 
-            onError={() => console.log("Login failed")}
-            />
-        {/* <form onSubmit={handleLogin} className="login-form">
-          <div className="form-group">
-            <label htmlFor="login">Identifiant</label>
-            <input
-              type="text"
-              id="login"
-              value={login}
-              onChange={(e) => setLogin(e.target.value)}
-              required
-              placeholder="Votre identifiant"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Mot de passe</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="Votre mot de passe"
-            />
-          </div>
-          <button type="submit" className="login-submit-btn">
-            Se connecter
-          </button>
-        </form> */}
+        <button onClick={handleLogin} className="login-submit-btn">
+          Se connecter avec Google
+        </button>
       </div>
     </div>
   );
