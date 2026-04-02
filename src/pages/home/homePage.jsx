@@ -80,37 +80,43 @@ export default function HomePage() {
                 }}
             />
 
-            <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+            <div className="offers-content-wrapper" style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
                 <div className={`offers-container ${selectedOffer ? 'split-view' : 'full-view'}`}>
                     {filteredOffers.length > 0 ? (
-
-                    filteredOffers.map((off) => (
-                    <OfferBox key={off.id} offer={off} onClick={() => {
-                        setSelectedOffer(off);
-                    }} />
-                    ))) 
-                    : 
-                    (
+                        filteredOffers.map((off) => (
+                            <React.Fragment key={off.id}>
+                                <OfferBox offer={off} onClick={() => {
+                                    setSelectedOffer(selectedOffer?.id === off.id ? null : off);
+                                }} />
+                                {/* Affichage conditionnel en dessous de l'élément (Mobile uniquement) */}
+                                {selectedOffer?.id === off.id && (
+                                    <div className="mobile-details-wrapper">
+                                        <SelectedOfferDetails selectedOffer={selectedOffer} setSelectedOffer={setSelectedOffer} />
+                                    </div>
+                                )}
+                            </React.Fragment>
+                        ))
+                    ) : (
                         // Si tableau vide ou null -> message
                         <div className="empty-state" style={{
-                        gridColumn: '1 / -1',
-                        textAlign: 'center',
-                        padding: '4rem 2rem',
-                        color: '#6b7280'
+                            gridColumn: '1 / -1',
+                            textAlign: 'center',
+                            padding: '4rem 2rem',
+                            color: '#6b7280'
                         }}>
-                        <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>
-                            {searchTerm ? 'Aucun résultat pour votre recherche' : 'Aucune offre disponible'}
-                        </h3>
-                        <p style={{ fontSize: '1rem', opacity: 0.8 }}>
-                            {searchTerm ? 'Essayez avec d\'autres mots-clés' : 'Revenez plus tard pour de nouvelles opportunités'}
-                        </p>
+                            <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>
+                                {searchTerm ? 'Aucun résultat pour votre recherche' : 'Aucune offre disponible'}
+                            </h3>
+                            <p style={{ fontSize: '1rem', opacity: 0.8 }}>
+                                {searchTerm ? 'Essayez avec d\'autres mots-clés' : 'Revenez plus tard pour de nouvelles opportunités'}
+                            </p>
                         </div>
                     )}
                 </div>
-        
+
                 {selectedOffer && (
-                    <div className="details-container">
-                    <SelectedOfferDetails selectedOffer={selectedOffer} setSelectedOffer={setSelectedOffer} />
+                    <div className="details-container desktop-only">
+                        <SelectedOfferDetails selectedOffer={selectedOffer} setSelectedOffer={setSelectedOffer} />
                     </div>
                 )}
             </div>
