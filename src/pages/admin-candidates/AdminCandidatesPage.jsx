@@ -17,6 +17,30 @@ const AdminCandidatesPage = () => {
     const [loadingResponses, setLoadingResponses] = useState(false);
     const [offerTitle, setOfferTitle] = useState(location.state?.offerTitle || '');
 
+    const handleDeleteCandidate = async (e, candidateId) => {
+        e.stopPropagation();
+        if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce candidat ?")) return;
+
+        try {
+            const response = await fetch(`${API_URL}/api/application/delete/${candidateId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                setCandidates(prev => prev.filter(c => c.id !== candidateId));
+                if (selectedCandidate?.id === candidateId) {
+                    setSelectedCandidate(null);
+                    setCandidateResponses([]);
+                }
+            } else {
+                alert("Erreur lors de la suppression du candidat.");
+            }
+        } catch (error) {
+            console.error("Erreur:", error);
+            alert("Erreur réseau lors de la suppression.");
+        }
+    };
+
     useEffect(() => {
         const fetchOfferDetails = async () => {
             if (offerTitle) return; // Skip if we already have it from location state
@@ -90,6 +114,7 @@ const AdminCandidatesPage = () => {
                         candidate={candidate}
                         isSelected={selectedCandidate?.id === candidate.id}
                         onClick={handleCandidateClick}
+                        onDelete={(e) => handleDeleteCandidate(e, candidate.id)}
                     />
                 ))}
             </div>
