@@ -74,6 +74,7 @@ const AdminCandidatesPage = () => {
 
         fetchOfferDetails();
         fetchCandidates();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [offerId]);
 
     const handleCandidateClick = async (candidate) => {
