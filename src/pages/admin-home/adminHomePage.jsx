@@ -109,13 +109,25 @@ export default function AdminHomePage() {
                 <div className={`offers-container ${selectedOffer ? 'split-view' : 'full-view'}`}>
                     {filteredOffers.length > 0 ? (
                         filteredOffers.map(off => (
-                            <AdminOffer 
-                                key={off.id} 
-                                offer={off} 
-                                onVisibilityChange={handleVisibilityChange}
-                                onViewMore={setSelectedOffer}
-                                onDelete={handleDeleteOffer}
-                            />
+                            <React.Fragment key={off.id}>
+                                <AdminOffer 
+                                    offer={off} 
+                                    onVisibilityChange={handleVisibilityChange}
+                                    onViewMore={(targetOffer) => {
+                                        setSelectedOffer(selectedOffer?.id === targetOffer.id ? null : targetOffer);
+                                    }}
+                                    onDelete={handleDeleteOffer}
+                                />
+                                {/* Affichage conditionnel en dessous de l'élément (Mobile uniquement) */}
+                                {selectedOffer?.id === off.id && (
+                                    <div className="mobile-details-wrapper">
+                                        <AdminSelectedOfferDetails 
+                                            selectedOffer={selectedOffer} 
+                                            setSelectedOffer={setSelectedOffer} 
+                                        />
+                                    </div>
+                                )}
+                            </React.Fragment>
                         ))
                     ) : (
                         <div className="empty-state" style={{
@@ -132,7 +144,7 @@ export default function AdminHomePage() {
                 </div>
 
                 {selectedOffer && (
-                    <div className="details-container">
+                    <div className="details-container desktop-only">
                         <AdminSelectedOfferDetails 
                             selectedOffer={selectedOffer} 
                             setSelectedOffer={setSelectedOffer} 
