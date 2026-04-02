@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import VisibilityToggle from './buttons/visibilityToggle';
-import ViewMoreButton from './buttons/viewMoreButton';
-import DeleteButton from './buttons/deleteButton';
-import '../../components/candidateOffer/styles/offer.css';
-import './styles/adminOffer.css';
+import VisibilityToggle from '../buttons/VisibilityToggle';
+import ViewMoreButton from '../buttons/ViewMoreButton';
+import DeleteButton from '../buttons/DeleteButton';
+import '../../candidateOffer/styles/offer.css';
+import '../styles/adminOffer.css';
+import { API_URL } from '../../../config';
 
 export default function AdminOffer({ offer, onVisibilityChange, onViewMore, onDelete }) {
   //const navigate = useNavigate();
@@ -34,7 +35,7 @@ export default function AdminOffer({ offer, onVisibilityChange, onViewMore, onDe
 
     console.log("OFFER ID: ", offer.id);
     try {
-      const response = await fetch(`http://localhost:8080/api/joboffer/editIsPublic/${offer.id}`, {
+      const response = await fetch(`${API_URL}/api/joboffer/editIsPublic/${offer.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

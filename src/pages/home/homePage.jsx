@@ -1,7 +1,8 @@
 import './homePage.css';
 import React, { useEffect, useState } from 'react';
-import OfferBox from '../../components/candidateOffer/offer';
-import SelectedOfferDetails from '../../components/candidateOffer/selectedOfferDetails';
+import OfferBox from '../../components/candidateOffer/offer-item/Offer';
+import SelectedOfferDetails from '../../components/candidateOffer/offer-details/SelectedOfferDetails';
+import { API_URL } from '../../config';
 
 export default function HomePage() {
 
@@ -9,7 +10,7 @@ export default function HomePage() {
     const [selectedOffer, setSelectedOffer] = useState(null);
     // -------------- FETCH API --------------
     useEffect(() => {
-        fetch('https://psjob-api.oups.net/api/joboffer/getAllPublic')
+        fetch(`${API_URL}/api/joboffer/getAllPublic`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);

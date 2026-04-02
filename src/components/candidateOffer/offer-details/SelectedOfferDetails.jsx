@@ -1,4 +1,4 @@
-import DetailedOffer from './detailedOffer';
+import DetailedOffer from './DetailedOffer';
 import PropTypes from 'prop-types';
 
 export default function SelectedOfferDetails({selectedOffer, setSelectedOffer}) {

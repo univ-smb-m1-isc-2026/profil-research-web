@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import AdminOffer from '../../components/admin/adminOffer';
-import AdminSelectedOfferDetails from '../../components/admin/adminSelectedOfferDetails';
+import AdminOffer from '../../components/admin/offer-item/AdminOffer';
+import AdminSelectedOfferDetails from '../../components/admin/offer-details/AdminSelectedOfferDetails';
+import { API_URL } from '../../config';
 //import mockOffers from '../../data/mockOffers';
 
 export default function AdminHomePage() {
@@ -9,7 +10,7 @@ export default function AdminHomePage() {
 
     // -------------- FETCH API --------------
     useEffect(() => {
-        fetch('http://localhost:8080/api/joboffer/getAll')
+        fetch(`${API_URL}/api/joboffer/getAll`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -32,7 +33,7 @@ export default function AdminHomePage() {
     };
 
     const handleDeleteOffer = (id) => {
-        fetch(`http://localhost:8080/api/joboffer/delete/${id}`, {
+        fetch(`${API_URL}/api/joboffer/delete/${id}`, {
             method: 'DELETE'
         })
         .then(response => {
