@@ -12,8 +12,8 @@ export default function QuestionBox({ question, answers, handleChangeText, handl
         }
         {question.format === 'text' && (
             <input
-                type="text"
-                value={answers[question.id]}
+                type={question.id === 'base-3' ? 'email' : 'text'}
+                value={answers[question.id] || ''}
                 onChange={e => handleChangeText(question.id, e.target.value)}
                 required
             />

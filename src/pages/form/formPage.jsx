@@ -1,11 +1,12 @@
 import './formPage.css';
 import QuestionBox from '../../components/questions/QuestionBox';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import React, { useEffect, useMemo, useState } from 'react';
 import { API_URL } from '../../config';
 
 export default function FormPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     console.log('offer id from url', id);
 
     const offerInfoMock = { title: 'Dev backend' , location: 'Paris' }
@@ -26,14 +27,17 @@ export default function FormPage() {
                 const data = await response.json();
                 console.log(data)
 
-                const normalizedQuestions = (data || [])
-                    .sort((a, b) => (a.question_number ?? 0) - (b.question_number ?? 0))
-                    .map((item) => ({
+                const normalizedQuestions = [
+                    { id: 'base-1', title: 'Nom du candidat', format: 'text', options: [] },
+                    { id: 'base-2', title: 'Prénom du candidat', format: 'text', options: [] },
+                    { id: 'base-3', title: 'Adresse Email', format: 'text', options: [] },
+                    ...(data || []).sort((a, b) => (a.question_number ?? 0) - (b.question_number ?? 0)).map((item) => ({
                         id: String(item.id_question?.id ?? item.id),
                         title: item.id_question?.title ?? 'Question',
                         format: (item.id_question?.format || 'TEXT').toLowerCase(),
                         options: item.id_question?.choices || [],
-                    }));
+                    }))
+                ];
 
                 setQuestions(normalizedQuestions);
             } catch (error) {
@@ -64,7 +68,9 @@ export default function FormPage() {
 
     const handleChangeText = (qid, value) => {    
         // Sécurité pour limiter les caractères autorisés et donc éviter les injections    
-        if (!/^[a-zA-Z0-9À-ÿ\s.,'-]*$/.test(value)) return;
+        // On autorise @ et les points pour l'email
+        const regex = qid === 'base-3' ? /^[a-zA-Z0-9À-ÿ\s.@,'-]*$/ : /^[a-zA-Z0-9À-ÿ\s.,'-]*$/;
+        if (!regex.test(value)) return;
 
         // NOTE : ... permet de copier les valeurs précédentes
         setAnswers(prev => ({ ...prev, [qid]: value }));
@@ -83,10 +89,49 @@ export default function FormPage() {
         setAnswers(prev => ({ ...prev, [qId]: option }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // TODO : envoyer au back les réponses pour les stocker
-        console.log('form answers', answers);
+        
+        const lastname = answers["base-1"] || '';
+        const firstname = answers["base-2"] || '';
+        const email = answers["base-3"] || '';
+
+        const responsesList = questions
+            .filter(q => q.id !== "base-1" && q.id !== "base-2" && q.id !== "base-3")
+            .map(q => {
+                const ans = answers[q.id];
+                return {
+                    id_question: Number.parseInt(q.id, 10),
+                    responses: Array.isArray(ans) ? ans : [ans]
+                };
+            });
+
+        const payload = {
+            mail: email,
+            firstname: firstname,
+            lastname: lastname,
+            jobOffer_id: Number.parseInt(id, 10),
+            responses: responsesList
+        };
+
+        try {
+            const response = await fetch(`${API_URL}/api/application/addApplication`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                alert('Candidature envoyée avec succès !');
+                navigate('/');
+            } else {
+                const err = await response.text();
+                alert('Erreur lors de l\'envoi : ' + err);
+            }
+        } catch (error) {
+            console.error('Erreur API:', error);
+            alert('Erreur réseau lors de l\'envoi de la candidature.');
+        }
     };
 
     const headerTitle = offerInfoMock.title;
@@ -100,7 +145,7 @@ export default function FormPage() {
                   {headerLocation && <p className="offer-location">{headerLocation}</p>}
               </div>
               <form onSubmit={handleSubmit}>
-                                {loadingQuestions && <p>Chargement des questions...</p>}
+                    {loadingQuestions && <p>Chargement des questions...</p>}
 
                                 {!loadingQuestions && questions.length === 0 && (
                                         <p>Aucune question n'est associée à cette offre pour le moment.</p>

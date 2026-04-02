@@ -35,7 +35,12 @@ const CandidateDetails = ({ candidate, candidateResponses, loadingResponses, onC
             </div>
             
             <div className="details-content">
-                <h3>Réponses :</h3>
+                <div className="candidate-info-summary" style={{ marginBottom: '20px', padding: '10px', backgroundColor: '#f9f9f9', borderRadius: '5px', border: '1px solid #ddd' }}>
+                    <p><strong>Nom :</strong> {candidate.lastname}</p>
+                    <p><strong>Prénom :</strong> {candidate.firstname}</p>
+                    <p><strong>Email :</strong> {candidate.mail}</p>
+                </div>
+                <h3>Réponses aux questions :</h3>
                 {content}
             </div>
         </div>

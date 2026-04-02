@@ -79,7 +79,7 @@ const AdminDetailedOffer = ({ offer }) => {
         <button 
           className="btn-submit" 
           style={{ width: '100%' }}
-          onClick={() => navigate(`/admin/offer/${offer.id}/candidates`)}
+          onClick={() => navigate(`/admin/offer/${offer.id}/candidates`, { state: { offerTitle: offer.title } })}
         >
           Voir les candidats
         </button>
