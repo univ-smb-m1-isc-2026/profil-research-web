@@ -2,6 +2,7 @@ import './formPage.css';
 import QuestionBox from '../../components/questions/QuestionBox';
 import { useParams } from "react-router-dom";
 import React, { useEffect, useMemo, useState } from 'react';
+import { API_URL } from '../../config';
 
 export default function FormPage() {
     const { id } = useParams();
@@ -17,7 +18,7 @@ export default function FormPage() {
         const fetchQuestions = async () => {
             setLoadingQuestions(true);
             try {
-                const response = await fetch(`http://localhost:8080/api/joboffer/getAllQuestion/${id}`);
+                const response = await fetch(`${API_URL}/api/joboffer/getAllQuestion/${id}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OfferDescriptionForm from '../../components/admin/creation/OfferDescriptionForm';
 import QuestionsManager from '../../components/admin/creation/QuestionsManager';
+import { API_URL } from '../../config';
 import './AdminCreateOfferPage.css';
 
 const AdminCreateOfferPage = () => {
@@ -69,7 +70,7 @@ const AdminCreateOfferPage = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:8080/api/joboffer/addJobOffer', {
+            const response = await fetch(`${API_URL}/api/joboffer/addJobOffer`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),

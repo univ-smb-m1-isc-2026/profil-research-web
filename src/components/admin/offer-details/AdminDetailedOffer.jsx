@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import '../../candidateOffer/styles/detailedOffer.css';
+import { API_URL } from '../../../config';
 
 const AdminDetailedOffer = ({ offer }) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const AdminDetailedOffer = ({ offer }) => {
     const fetchQuestions = async () => {
       setLoadingQuestions(true);
       try {
-        const response = await fetch(`http://localhost:8080/api/joboffer/getAllQuestion/${offer.id}`);
+        const response = await fetch(`${API_URL}/api/joboffer/getAllQuestion/${offer.id}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

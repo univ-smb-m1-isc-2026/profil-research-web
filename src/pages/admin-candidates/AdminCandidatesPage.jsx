@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CandidateItem from '../../components/admin/candidate-item/CandidateItem';
 import CandidateDetails from '../../components/admin/candidate-details/CandidateDetails';
+import { API_URL } from '../../config';
 import './AdminCandidatesPage.css';
 
 const AdminCandidatesPage = () => {
@@ -17,7 +18,7 @@ const AdminCandidatesPage = () => {
     useEffect(() => {
         const fetchCandidates = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/application/getApplicationByJobOffer/${offerId}`);
+                const response = await fetch(`${API_URL}/api/application/getApplicationByJobOffer/${offerId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setCandidates(data);
@@ -38,7 +39,7 @@ const AdminCandidatesPage = () => {
         setSelectedCandidate(candidate);
         setLoadingResponses(true);
         try {
-            const response = await fetch(`http://localhost:8080/api/application/getAllResponses/${candidate.id}`);
+            const response = await fetch(`${API_URL}/api/application/getAllResponses/${candidate.id}`);
             if (response.ok) {
                 const data = await response.json();
                 setCandidateResponses(data);
