@@ -64,13 +64,13 @@ export default function HeaderHome() {
         {admin ? (
           <>
             <div className="admin-nav-desktop">
-              <Link to="/admin" className="add-offer-btn" style={{ textDecoration: 'none' }}>
+              <Link to="/admin" className="login-btn" style={{ textDecoration: 'none' }}>
                 Dashboard
               </Link>
-              <Link to="/create-offer" className="add-offer-btn" style={{ textDecoration: 'none' }}>
+              <Link to="/create-offer" className="login-btn" style={{ textDecoration: 'none' }}>
                 Créer une offre
               </Link>
-              <button onClick={handleCreateInvite} className="add-offer-btn" style={{ textDecoration: 'none', border: 'none', font: 'inherit', fontWeight: 700 }}>
+              <button onClick={handleCreateInvite} className="login-btn" style={{ textDecoration: 'none', border: 'none', font: 'inherit' }}>
                 Inviter collab
               </button>
               <button onClick={handleLoginClick} className="login-btn">
