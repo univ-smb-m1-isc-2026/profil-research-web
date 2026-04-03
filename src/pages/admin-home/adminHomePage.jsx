@@ -3,6 +3,8 @@ import AdminOffer from '../../components/admin/offer-item/AdminOffer';
 import AdminSelectedOfferDetails from '../../components/admin/offer-details/AdminSelectedOfferDetails';
 import SearchBar from '../../components/mainComponents/SearchBar';
 import { API_URL } from '../../config';
+import { fetchWithAuth } from '../../utils/api';
+//import mockOffers from '../../data/mockOffers';
 
 export default function AdminHomePage() {
     const [offers, setOffers] = useState([]);
@@ -26,7 +28,7 @@ export default function AdminHomePage() {
 
     // -------------- FETCH API --------------
     useEffect(() => {
-        fetch(`${API_URL}/api/joboffer/getAll`)
+        fetchWithAuth(`${API_URL}/api/joboffer/getAll`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);

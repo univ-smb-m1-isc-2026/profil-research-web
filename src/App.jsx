@@ -7,6 +7,8 @@ import AdminCreateOfferPage from './pages/admin-create-offer/AdminCreateOfferPag
 import AdminCandidatesPage from './pages/admin-candidates/AdminCandidatesPage';
 import ProtectedRoute from './components/mainComponents/ProtectedRoute';
 import LoginPage from './pages/login/LoginPage';
+import InvitePage from './pages/invite/InvitePage';
+import OAuth2RedirectHandler from './pages/oauth2/OAuth2RedirectHandler';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} /> 
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/invite" element={<InvitePage />} />
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
         <Route path="/form/:id" element={<FormPage />} />
         <Route
           path="/admin"

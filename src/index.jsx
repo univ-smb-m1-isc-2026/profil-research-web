@@ -5,13 +5,18 @@ import './index.css';
 import App from './App';
 import { AdminProvider } from "./context/AdminContext";
 import reportWebVitals from './reportWebVitals';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+const CLIENT_ID = "412714806684-ve8e8988ban8j55uieudr7om2ktvkvt6.apps.googleusercontent.com";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AdminProvider>
       <BrowserRouter>
-        <App />
+        <GoogleOAuthProvider clientId={CLIENT_ID}>
+          <App />
+        </GoogleOAuthProvider>
       </BrowserRouter>
     </AdminProvider>
   </React.StrictMode>
