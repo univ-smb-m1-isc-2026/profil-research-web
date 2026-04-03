@@ -30,10 +30,22 @@ const CandidateDetails = ({ candidate, candidateResponses, loadingResponses, onC
     }
 
     return (
-        <div className="candidate-details-container">
+        <div className="candidate-details-container" style={{ position: 'relative' }}>
             <div className="details-header">
                 <h2>Détails du candidat : {candidate.firstname} {candidate.lastname}</h2>
-                <button className="close-btn" onClick={onClose} aria-label="Fermer">×</button>
+                <button 
+                  className="close-btn" 
+                  onClick={onClose} 
+                  aria-label="Fermer"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#fee2e2';
+                    e.currentTarget.style.color = '#dc2626';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = 'var(--text-muted)';
+                  }}
+                >×</button>
             </div>
             
             <div className="details-content">

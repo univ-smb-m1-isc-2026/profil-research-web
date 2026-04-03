@@ -63,38 +63,16 @@
   font-size: 0.95rem;
 }
 
-/* 'Créer une offre' button: same visual style as login-btn and placed to the left of it */
-.add-offer-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #f0f9ff; /* match login-btn */
-  border: 1px solid #e6f6ff;
-  padding: 8px 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  color: #0369a1;
-  font-weight: 700;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  text-decoration: none;
-  margin-right: 8px; /* ensure it sits just left of the logout button */
-}
-
-.add-offer-btn:focus {
-  outline: 3px solid rgba(7, 89, 133, 0.12);
-  outline-offset: 2px;
-}
-
-.add-offer-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(3, 105, 161, 0.06);
-}
-
-/* Admin navigation styles */
-.admin-nav-desktop {
+.header-right {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.admin-nav-desktop {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 /* Burger Button */
@@ -102,8 +80,8 @@
   display: none;
   flex-direction: column;
   justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
+  width: 30px;
+  height: 24px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -112,8 +90,8 @@
 }
 
 .burger-menu-btn span {
-  width: 2rem;
-  height: 0.25rem;
+  width: 30px;
+  height: 3px;
   background: #0369a1;
   border-radius: 10px;
   transition: all 0.3s linear;
@@ -127,7 +105,6 @@
 
 .burger-menu-btn.open span:nth-child(2) {
   opacity: 0;
-  transform: translateX(20px);
 }
 
 .burger-menu-btn.open span:nth-child(3) {
@@ -143,10 +120,10 @@
   height: 100vh;
   width: 250px;
   background: white;
-  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-  padding: 80px 20px 20px;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
   flex-direction: column;
-  gap: 20px;
+  padding: 80px 20px 20px 20px;
+  gap: 15px;
   z-index: 100;
   transition: transform 0.3s ease-in-out;
   transform: translateX(100%);
@@ -159,7 +136,7 @@
 
 .mobile-nav-link {
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #0369a1;
   padding: 12px;
@@ -168,14 +145,20 @@
   text-align: center;
   border: none;
   cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mobile-nav-link:hover {
+  background: #e0f2fe;
 }
 
 .login-mobile {
-  background: #f0f9ff;
-  color: #0369a1;
+  background: #fee2e2;
+  color: #dc2626;
+  margin-top: auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .admin-nav-desktop {
     display: none;
   }
@@ -183,10 +166,8 @@
   .burger-menu-btn {
     display: flex;
   }
+}
 
-  .admin-nav-mobile {
-    display: flex;
-  }
 /* Modal styles */
 .modal-overlay {
   position: fixed;
