@@ -11,11 +11,13 @@ const CandidateDetails = ({ candidate, candidateResponses, loadingResponses, onC
         content = (
             <ul className="responses-list">
                 {candidateResponses.map((item, index) => (
-                    <li key={item.id_question.id || `q-${index}`} className="response-item">
-                        <p className="question-text"><strong>Question :</strong> {item.id_question.content}</p>
+                    <li key={item.id_question.id || `q-${index}`} className="response-item" style={{ marginBottom: '1.5rem', listStyle: 'none', padding: '10px', backgroundColor: '#fff', borderRadius: '5px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                        <p className="question-text" style={{ fontSize: '1.1rem', marginBottom: '8px' }}>
+                            <strong>Question :</strong> {item.id_question.title || item.id_question.content}
+                        </p>
                         <div className="answer-text">
                             <strong>Réponse(s) :</strong> 
-                            <ul>
+                            <ul style={{ marginTop: '5px' }}>
                                 {item.responses?.map((resp, i) => (
                                     <li key={`${item.id_question.id || index}-resp-${i}`}>{resp}</li>
                                 ))}

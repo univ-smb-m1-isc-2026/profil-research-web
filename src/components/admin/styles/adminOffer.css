@@ -7,8 +7,27 @@
 .admin-actions {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 12px;
   margin-top: 12px;
+  flex-wrap: wrap; /* Permet le passage à la ligne si besoin */
+}
+
+@media (max-width: 600px) {
+  .admin-actions {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .view-more-btn, 
+  .delete-btn, 
+  .visibility-toggle {
+    flex: 1; /* Les boutons prennent la même largeur */
+    min-width: 120px; /* Évite qu'ils ne deviennent trop petits */
+    justify-content: center;
+    font-size: 0.85rem;
+    padding: 8px 4px;
+  }
 }
 
 .view-more-btn {

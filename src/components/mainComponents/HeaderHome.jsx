@@ -2,10 +2,12 @@ import './styles/headerHome.css';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdmin } from "../../context/AdminContext";
+import { useState } from 'react';
 import { fetchWithAuth } from "../../utils/api";
 
 export default function HeaderHome() {
   const { admin, setAdmin } = useAdmin();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [inviteUrl, setInviteUrl] = useState('');
@@ -13,6 +15,7 @@ export default function HeaderHome() {
   const handleLoginClick = () => {
     if (admin) {
       setAdmin(null);
+      setIsMenuOpen(false);
       localStorage.removeItem('jwt_token');
       navigate('/');
     } else {
@@ -20,6 +23,7 @@ export default function HeaderHome() {
     }
   };
 
+  const closeMenu = () => setIsMenuOpen(false);
   const handleCreateInvite = async () => {
     try {
       // Utilisation du bon endpoint configuré dans le contrôleur (probablement /api/invitations/generate)
@@ -49,27 +53,52 @@ export default function HeaderHome() {
   return (
     <header className="header-home">
       <div className="header-left">
-        <Link to="/" style={{ textDecoration: 'none' }}>
+        <Link to="/" style={{ textDecoration: 'none' }} onClick={closeMenu}>
           <span className="site-title">Profil Research</span>
         </Link>
         <span className="site-subtitle">- Offres & profils</span>
       </div>
 
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-        {admin && (
-          <>
-            <Link to="/admin" className="add-offer-btn" style={{ textDecoration: 'none' }}>
+      {admin ? (
+        <>
+          {/* Menu Desktop */}
+          <div className="admin-nav-desktop">
+            <Link to="/admin" className="add-offer-btn">
                 Dashboard
             </Link>
-            <Link to="/create-offer" className="add-offer-btn" style={{ textDecoration: 'none' }}>
+            <Link to="/create-offer" className="add-offer-btn">
                 Créer une offre
             </Link>
-            <button onClick={handleCreateInvite} className="add-offer-btn" style={{ textDecoration: 'none', border: 'none', font: 'inherit', fontWeight: 700 }}>
-                Inviter collab
+            <button onClick={handleLoginClick} className="login-btn">
+              <svg className="login-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="login-label">Déconnexion</span>
             </button>
-          </>
-        )}
+          </div>
 
+          {/* Bouton Burger Mobile */}
+          <button className={`burger-menu-btn ${isMenuOpen ? 'open' : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          {/* Menu Mobile Overlay */}
+          <div className={`admin-nav-mobile ${isMenuOpen ? 'open' : ''}`}>
+            <Link to="/admin" className="mobile-nav-link" onClick={closeMenu}>
+                Dashboard
+            </Link>
+            <Link to="/create-offer" className="mobile-nav-link" onClick={closeMenu}>
+                Créer une offre
+            </Link>
+            <button onClick={handleLoginClick} className="mobile-nav-link login-mobile">
+              Déconnexion
+            </button>
+          </div>
+        </>
+      ) : (
         <button onClick={handleLoginClick} aria-label="Connexion employés" className="login-btn">
           <svg className="login-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

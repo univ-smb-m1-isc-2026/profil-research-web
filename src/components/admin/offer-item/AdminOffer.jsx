@@ -85,14 +85,14 @@ export default function AdminOffer({ offer, onVisibilityChange, onViewMore, onDe
   };
 
   return (
-    <div className="offer-card admin-offer">
+    <div className="offer-card admin-offer" onClick={handleViewMore} style={{ cursor: 'pointer' }}>
       <div className="offer-header">
         <h3 className="offer-title">{offer.title}</h3>
         <span className="location-tag">{offer.location}</span>
       </div>
       <p className="offer-excerpt">{offer.description}</p>
 
-      <div className="admin-actions">
+      <div className="admin-actions" onClick={(e) => e.stopPropagation()}>
         <ViewMoreButton onClick={handleViewMore} />
         <VisibilityToggle 
           visible={visible} 
